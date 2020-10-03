@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "QueryBasedProducer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
