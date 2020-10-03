@@ -1,0 +1,13 @@
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\bin\Debug\netcoreapp3.1\OutboxPatternProducer.exe
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\bin\Debug\netcoreapp3.1\OutboxPatternProducer.deps.json
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\bin\Debug\netcoreapp3.1\OutboxPatternProducer.runtimeconfig.json
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\bin\Debug\netcoreapp3.1\OutboxPatternProducer.runtimeconfig.dev.json
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\bin\Debug\netcoreapp3.1\OutboxPatternProducer.dll
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\bin\Debug\netcoreapp3.1\OutboxPatternProducer.pdb
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.csprojAssemblyReference.cache
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.AssemblyInfoInputs.cache
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.AssemblyInfo.cs
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.csproj.CoreCompileInputs.cache
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.dll
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.pdb
+C:\mrjamiebowman\.net-kafka-producers\src\OutboxPatternProducer\obj\Debug\netcoreapp3.1\OutboxPatternProducer.genruntimeconfig.cache

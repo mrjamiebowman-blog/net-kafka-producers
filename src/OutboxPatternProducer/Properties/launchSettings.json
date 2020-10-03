@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OutboxPatternProducer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "cbKdv1oxe+cxdrZJ8SWWUDTnk+9khbqZvleb6wOMcjUm+NB8CDTRQa7S/Zam1ISNBQTChh6tP5hdJeiL+9rlQw==",
+  "success": true,
+  "projectFilePath": "C:\\mrjamiebowman\\.net-kafka-producers\\src\\BatchOperationProducer\\BatchOperationProducer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mrjamiebowman\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
+    "C:\\Users\\mrjamiebowman\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

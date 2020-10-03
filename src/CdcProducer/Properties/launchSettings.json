@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CdcProducer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

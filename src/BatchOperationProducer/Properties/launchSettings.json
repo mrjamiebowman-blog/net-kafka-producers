@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BatchOperationProducer": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

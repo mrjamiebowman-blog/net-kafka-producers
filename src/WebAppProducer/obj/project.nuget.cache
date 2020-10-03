@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6VGt6PCmAuN5tXciOitlItZ9N3vu2VyNs/HboO5Ws49RvkyawY8+jJ0oxnifQaMOlEh723cNhekm8SJ8gGuPZg==",
+  "success": true,
+  "projectFilePath": "C:\\mrjamiebowman\\.net-kafka-producers\\src\\WebAppProducer\\WebAppProducer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\mrjamiebowman\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
+  ],
+  "logs": []
+}

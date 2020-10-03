@@ -1,0 +1,19 @@
+version: '3.3'
+
+networks:
+  netkafkaproducers:
+
+services:   
+  mssql:
+    build: ./docker/mssql
+    container_name: mrjb_kafka_producers
+    ports:
+      - 1433:1433
+    restart: always
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'NyLct4D@7K{s'
+    volumes:
+     - ./docker/data/mssql/:/var/opt/mssql/data
+    networks:
+      - netkafkaproducers
