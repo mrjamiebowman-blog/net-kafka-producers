@@ -1,8 +1,8 @@
 USE master
 GO
-CREATE DATABASE mrjb_batchoperations
+CREATE DATABASE mrjb_querybased
 GO
-USE [mrjb_batchoperations]
+USE [mrjb_querybased]
 GO 
 
 /* customers */
@@ -42,6 +42,96 @@ GO
 
 ALTER TABLE [dbo].[PurchaseOrders] CHECK CONSTRAINT [FK_PurchaseOrders_Customers]
 GO
+
+
+
+-- =============================================
+-- Author:		Jamie Bowman
+-- Create date: 10/03/2020
+-- Description:	Get data for Batch Operations
+-- =============================================
+ALTER PROCEDURE [dbo].[uspBatchOperationGetData]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	--SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+	SET LOCK_TIMEOUT 10000
+
+	/* declare threshold in seconds to re-attempt producing a message */
+	/* http requests typically timeout in seconds 30-120 seconds */
+	DECLARE @threadhold INT = 120 
+
+	DECLARE @NextId INT
+
+	BEGIN TRAN
+	
+	SELECT
+		TOP 1
+		@NextId = po.PurchaseOrderId
+	FROM dbo.PurchaseOrders po
+	WITH (UPDLOCK, READPAST)
+	WHERE
+		/* has not been read or procuded yet */
+		(po.OnProducerRead IS NULL AND po.OnProduced IS NULL)
+
+		OR
+		/* has been read, failed to produce */
+		(po.OnProducerRead IS NOT NULL AND 
+		 po.OnProduced IS NULL AND 
+		 DATEDIFF(ss, po.OnProducerRead, GETUTCDATE()) >= @threadhold)
+
+		OR
+		/* has been updated and needs to be re-produced */
+		(po.OnModified > po.OnProduced)
+	ORDER BY
+		po.OnCreated ASC
+
+	IF (@NextId IS NOT NULL)
+		BEGIN
+			UPDATE dbo.PurchaseOrders SET OnProducerRead = GETUTCDATE() WHERE PurchaseOrderId = @NextId
+		END
+		
+	COMMIT TRANSACTION
+
+	/* return row for queue */
+	SELECT 
+		 po.PurchaseOrderId
+		,po.CustomerId
+		,po.PoNumber
+		,po.Amount
+		FROM dbo.PurchaseOrders po
+		WHERE po.PurchaseOrderId = @NextId
+
+END
+
+
+
+
+
+-- =============================================
+-- Author:		Jamie Bowman
+-- Create date: 10/03/2020
+-- Description:	Tombstone Batch Operation
+-- =============================================
+CREATE PROCEDURE [dbo].[uspBatchOperationTombstone]
+	@PurchaseOrderId INT
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE 
+		dbo.PurchaseOrder 
+	SET OnProduced = GETUTCDATE() 
+	WHERE 
+		PurchaseOrderId = @PurchaseOrderId
+END
+GO
+
 
 
 
