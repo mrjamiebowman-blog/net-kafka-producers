@@ -24,6 +24,7 @@ CREATE TABLE [dbo].[PurchaseOrders](
 	[Amount] [decimal](18, 0) NOT NULL,
 	[OnCreated] [datetime2](7) NOT NULL,
 	[OnModified] [datetime2](7) NOT NULL,
+	[OnProducerRead] [datetime2](7) NULL,
 	[OnProduced] [datetime2](7) NULL,
  CONSTRAINT [PK_PurchaseOrders] PRIMARY KEY CLUSTERED 
 (
@@ -44,13 +45,18 @@ ALTER TABLE [dbo].[PurchaseOrders] CHECK CONSTRAINT [FK_PurchaseOrders_Customers
 GO
 
 
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
 
 -- =============================================
 -- Author:		Jamie Bowman
 -- Create date: 10/03/2020
 -- Description:	Get data for Batch Operations
 -- =============================================
-ALTER PROCEDURE [dbo].[uspBatchOperationGetData]
+CREATE PROCEDURE [dbo].[uspBatchOperationGetData]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -104,26 +110,18 @@ BEGIN
 		,po.Amount
 		FROM dbo.PurchaseOrders po
 		WHERE po.PurchaseOrderId = @NextId
-
 END
-
-
-
-
+GO
 
 -- =============================================
 -- Author:		Jamie Bowman
 -- Create date: 10/03/2020
 -- Description:	Tombstone Batch Operation
 -- =============================================
-CREATE PROCEDURE [dbo].[uspBatchOperationTombstone]
-	@PurchaseOrderId INT
+CREATE PROCEDURE [dbo].[uspBatchOperationTombstone] 
+(@PurchaseOrderId INT)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
 	UPDATE 
 		dbo.PurchaseOrder 
 	SET OnProduced = GETUTCDATE() 
@@ -131,8 +129,6 @@ BEGIN
 		PurchaseOrderId = @PurchaseOrderId
 END
 GO
-
-
 
 
 -- =============================================

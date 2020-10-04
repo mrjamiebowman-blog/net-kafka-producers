@@ -5,6 +5,9 @@
 
 # docker data
 docker/data/*
+!docker/data/.gitkeep
+docker/dbs/*
+!docker/dbs/.gitkeep
 
 # User-specific files
 *.rsuser
