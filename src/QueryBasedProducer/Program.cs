@@ -1,5 +1,6 @@
 ﻿using Confluent.Kafka;
 using QueryBasedProducer.Models;
+using QueryBasedProducer.Repositories;
 using System;
 using System.Net;
 using System.Text.Json;
@@ -9,10 +10,15 @@ namespace QueryBasedProducer
 {
     class Program
     {
+        private static IPurchaseOrderProducerRepository _purchaseOrderProdcerRepo;
+
         static async Task Main(string[] args)
         {
             try
             {
+                // typically a dependency handler would inject this but for demo purposes ONLY...
+                _purchaseOrderProdcerRepo = new SqlPurchaseOrderProducerRepository();
+
                 // banner
                 Console.WriteLine("Query Based Producer Started.");
                 Console.WriteLine("Press CTRL+C to exit");
@@ -39,22 +45,28 @@ namespace QueryBasedProducer
                     Console.WriteLine("\nQuerying database for data...");
 
                     // query db
-                    PurchaseOrder obj = null;
+                    PurchaseOrder obj = await _purchaseOrderProdcerRepo.GetPurchaseOrderForProcessingAsync();
 
                     // exponential backoff (if there's no data slow the queries down.)
                     if (obj == null)
                     {
                         tries++;
                         var seconds = GetExponentialBackOff(tries);
+
+                        // total backoff time
                         backoffTime += seconds;
                         TimeSpan t = TimeSpan.FromSeconds(backoffTime);
-                        string formatedBackoffTime = string.Format("{0:D2}h:{1:D2}m:{2:D2}s, t.Hours, t.Minutes, t.Seconds");
+                        string formatedBackoffTime = string.Format("{0:D2}h:{1:D2}m:{2:D2}s", t.Hours, t.Minutes, t.Seconds);
+
+                        // outout to console
                         Console.WriteLine($"No data. Exponential backoff of {seconds} seconds. Backoff Time: {formatedBackoffTime}.");
+
+                        // backoff
                         await Task.Delay(seconds * 1000);
                         continue;
                     }
 
-                    // reset tries & back off time
+                    // reset tries & backoff time
                     tries = 0; backoffTime = 0;
 
                     using (var producer = new ProducerBuilder<Null, string>(config).Build())
@@ -64,6 +76,9 @@ namespace QueryBasedProducer
 
                         // push to Kafka
                         await producer.ProduceAsync("purchaseorders", new Message<Null, string> { Value = jsonMsg });
+
+                        // tombstone record
+                        await _purchaseOrderProdcerRepo.TombstonePurchaseOrder(obj.PurchaseOrderId);
                     }
 
                     // produce message to Kafka
