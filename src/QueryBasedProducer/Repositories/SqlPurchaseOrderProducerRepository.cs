@@ -13,8 +13,7 @@ namespace QueryBasedProducer.Repositories
         public IDbConnection GetConnection()
         {
             // should always come from injected configuration values but because this is a demo...
-            //var conn = new SqlConnection("Server=localhost;Database=mrjb_querybased;User Id=sa;Password=NyLct4D@7K{s;");
-            var conn = new SqlConnection("Server=localhost;Database=mrjb_batchoperations;User Id=sa;Password=NyLct4D@7K{s;");
+            var conn = new SqlConnection("Server=localhost;Database=mrjb_querybased;User Id=sa;Password=NyLct4D@7K{s;");
             return conn;
         }
 

@@ -23,6 +23,8 @@ namespace QueryBasedProducer
                 Console.WriteLine("Query Based Producer Started.");
                 Console.WriteLine("Press CTRL+C to exit");
 
+                //TODO: health checks
+
                 var config = new ProducerConfig
                 {
                     Acks = Acks.All,
